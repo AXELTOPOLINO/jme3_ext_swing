@@ -85,6 +85,54 @@ public class HelloPicking extends AbstractAppState {
 				}
 			}
 		});
+		panel..addKeyListener(new KeyAdapter() {
+                	@Override
+                 	public void keyTyped(KeyEvent e) {
+                 	}
+
+                 	@Override
+                 	public void keyPressed(final KeyEvent e) {
+                 		jme.enqueue(new Callable<Void>() {
+                 			@Override
+                 			public Void call() throws Exception {
+                 				if (e.getKeyCode() == KeyEvent.VK_W) {
+                 					System.out.println("WORKS");
+                 					moveCamera(1F, false);
+                 				}
+                 				if (e.getKeyCode() == KeyEvent.VK_S) {
+                 					moveCamera(-1F, false);
+                 				}
+                 				if (e.getKeyCode() == KeyEvent.VK_A) {
+                 					moveCamera(1F, true);
+                 				}
+                 				if (e.getKeyCode() == KeyEvent.VK_D) {
+                 					moveCamera(-1F, true);
+                 				}
+                 			return null;
+                 			}
+                 		});
+                 	}
+
+                	@Override
+                 	public void keyReleased(KeyEvent e) {
+                 	}
+                 });
+	}
+	
+	protected void moveCamera(float value, boolean sideways) {
+        	Vector3f vel = new Vector3f();
+        	Vector3f pos = cam.getLocation().clone();
+
+        	if (sideways) {
+        		cam.getLeft(vel);
+        	} else {
+            		cam.getDirection(vel);
+        	}
+        	vel.multLocal(value * moveSpeed);
+
+        	pos.addLocal(vel);
+
+        	cam.setLocation(pos);
 	}
 
 	public void shoot(Vector2f screenPos) {
