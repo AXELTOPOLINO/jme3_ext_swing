@@ -85,7 +85,8 @@ public class HelloPicking extends AbstractAppState {
 				}
 			}
 		});
-		panel..addKeyListener(new KeyAdapter() {
+		
+		panel.addKeyListener(new KeyAdapter() {
                 	@Override
                  	public void keyTyped(KeyEvent e) {
                  	}
